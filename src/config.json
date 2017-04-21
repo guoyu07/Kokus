@@ -1,0 +1,13 @@
+{
+	"port": 5000,
+	"bodyLimit": "100kb",
+	"corsHeaders": ["Link"],
+	"google_info": {
+		"subject": "ss@coworkingplus.dk",
+		"credentials": "/home/thesinding/code/bookingBackend/src/credentials/serverAccess.json",
+		"scopes": [
+			"https://www.googleapis.com/auth/admin.directory.resource.calendar",
+			"https://www.googleapis.com/auth/calendar"
+			]
+	} 
+}
