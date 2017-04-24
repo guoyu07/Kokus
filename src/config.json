@@ -4,7 +4,7 @@
 	"corsHeaders": ["Link"],
 	"google_info": {
 		"subject": "ss@coworkingplus.dk",
-		"credentials": "/home/thesinding/code/bookingBackend/src/credentials/serverAccess.json",
+		"credentials": "/home/thesinding/code/bookingBackend/src/credentials/moobook-d04d72b7dca7.json",
 		"scopes": [
 			"https://www.googleapis.com/auth/admin.directory.resource.calendar",
 			"https://www.googleapis.com/auth/calendar"

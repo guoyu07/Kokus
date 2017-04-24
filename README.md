@@ -8,7 +8,12 @@ HoneyBase - Booking backend
 
 Getting Started
 ---------------
+#### Note 
+As of right now, you'll have to have a service account on Google with Domain Wide Access..
+The service account key needs to be put in a folder inside src called **src/credentials** 
 
+This will properbly be changed at one point to a traditional Google login page..
+ 
 ```sh
 # clone it
 git clone https://github.com/coworkingplus/HoneyBase.git
