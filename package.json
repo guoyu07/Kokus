@@ -1,7 +1,7 @@
 {
-  "name": "MooBookBackend",
+  "name": "HoneyBase",
   "version": "0.0.1",
-  "description": "Backend for the React APP",
+  "description": "Backend for HoneyBooq",
   "main": "dist",
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
@@ -24,7 +24,7 @@
       "no-unused-vars": 1
     }
   },
-  "repository": "thesinding/moobookBackend",
+  "repository": "coworkingplus/HoneyBase",
   "author": "Simon Sinding <sinding2000@gmail.com>",
   "license": "MIT",
   "dependencies": {
