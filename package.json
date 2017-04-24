@@ -26,7 +26,7 @@
   },
   "repository": "coworkingplus/HoneyBase",
   "author": "Simon Sinding <sinding2000@gmail.com>",
-  "license": "MIT",
+  "license": "GNU GPLv3",
   "dependencies": {
     "axios": "^0.16.1",
     "body-parser": "^1.13.3",
