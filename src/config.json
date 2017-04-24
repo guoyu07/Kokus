@@ -2,7 +2,13 @@
 	"port": 5000,
 	"bodyLimit": "100kb",
 	"corsHeaders": ["Link"],
+	"authorize_method": "google_jwt",
 	"google_info": {
+		"client_info": {
+			"clientId":"",
+			"clientSecret":"",
+			"redirect_url":""
+		},
 		"subject": "ss@coworkingplus.dk",
 		"credentials": "/home/thesinding/code/bookingBackend/src/credentials/moobook-d04d72b7dca7.json",
 		"scopes": [
