@@ -26,6 +26,16 @@ https://localhost:5000/api
 
 ```
 
+Todo
+----
+- Add support for logins with Google.
+- Add support for other calendars backend eg. Outlook, Exchange
+- Add Websockets - For the upstream app, to "check" if the backend is alive
+- Add settings control app / pages
+- more
+
+
+
 License
 -------
 
