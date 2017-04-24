@@ -5,7 +5,7 @@ import eventsModel from '../models/events';
 export default ({ config, db }) => resource({
 
 	/** Property name to store preloaded entity on `request`. */
-	id : 'event',
+	id : 'eventId',
 
 	/** For requests with an `id`, you can auto-load the entity.
 	 *  Errors terminate the request, success sets `req[id] = data`.
@@ -22,12 +22,12 @@ export default ({ config, db }) => resource({
 	index({ params, baseUrl }, res) {
 		let calendarId = baseUrl.split("/")[3];
 		eventsModel.list(calendarId, (err, events) => {
-			res.json(events);
+			event ? res.json(events) : res.json(err);
 		});
 	},
 
 	/** POST / - Create a new entity */
-	create({ body }, res) {
+	create({ body, baseUrl }, res) {
 		body.calendarId = baseUrl.split("/")[3]; 		
 		eventsModel.create(body, (err, event) => {
 			event ? res.json(event) : res.json(err);
@@ -35,24 +35,28 @@ export default ({ config, db }) => resource({
 	},
 
 	/** GET /:id - Return a given entity */
-	read({ event }, res) {
-		res.json(event);
+	read({ eventId }, res) {
+		res.json(eventId);
 	},
 
 	/** PUT /:id - Update a given entity */
-	update({ facet, body }, res) {
-		console.log("update");
-		for (let key in body) {
-			if (key!=='id') {
-				facet[key] = body[key];
-			}
-		}
-		res.sendStatus(204);
+	update({ body, params, baseUrl }, res) {
+		body.calendarId = baseUrl.split("/")[3];
+		body.eventId = params.eventId;	
+		eventsModel.update(body, (err, event) => {
+			event ? res.json(event) : res.json(err);
+		});
 	},
 
 	/** DELETE /:id - Delete a given entity */
-	delete(id, res) {
-		console.log(body);
-		res.sendStatus(204);
+	delete({ params, baseUrl }, res) {
+		let calendarId = baseUrl.split("/")[3];
+		let event = {
+			calendarId,
+			eventId: params.eventId
+		};
+		eventsModel.delete(event, (err, event) => {
+			err ? res.json(err) : res.sendStatus(204);
+		});
 	}
 });
