@@ -1,9 +1,9 @@
-import jwtClient from './jwtClient';
+import authorizer from '../auth';
 import google from 'googleapis';
 
 let calendar = google.calendar('v3');
 let auth = {};
-jwtClient.authorize((err, res) => {
+authorizer.authorize((err, res) => {
     if(err) throw(err);
     auth = res;
 });

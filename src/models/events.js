@@ -1,4 +1,6 @@
-import jwtClient from './jwtClient';
+// import jwtClient from '../auth/jwtClient';
+import authorizer from '../auth';
+
 import google from 'googleapis';
 
 // Create calendar object
@@ -8,7 +10,7 @@ let { events } = calendar;
  
 let auth = {};
 // Get authorization from google with the credentials.
-jwtClient.authorize((err, res) => {
+authorizer.authorize((err, res) => {
     if(err) throw(err);
 
     // Store the authorization in the auth object
