@@ -1,6 +1,4 @@
-// import jwtClient from '../auth/jwtClient';
 import authorizer from '../auth';
-
 import google from 'googleapis';
 
 // Create calendar object
@@ -10,11 +8,11 @@ let { events } = calendar;
  
 let auth = {};
 // Get authorization from google with the credentials.
-authorizer.authorize((err, res) => {
+authorizer.authorize((err, JWTToken) => {
     if(err) throw(err);
 
     // Store the authorization in the auth object
-    auth = res;
+    auth = JWTToken;
 });
 const eventsModel = {
     // List all calendar events
@@ -23,42 +21,42 @@ const eventsModel = {
             auth, 
             calendarId
         };
-        events.list(eventOptions, (err, res) => {
-            callback(err, res);
+        events.list(eventOptions, (err, event) => {
+            callback(err, event);
         });
     },
 
     // Create a google calendar event
     create(event, callback){
         let eventOptions = {
-            auth: auth, // Always have the auth object.
+            auth, // Always have the auth object.
             calendarId: event.calendarId,
             resource: event
         }; 
-        events.insert(eventOptions,(err, res) => {
-            callback(err,res);
+        events.insert(eventOptions,(err, event) => {
+            callback(err, event);
         });
     },
 
     // Updates a given event in google calendar
     update(event, callback){
         let eventOptions = {
-            auth: auth,
+            auth,
             calendarId: event.calendarId,
             eventId: event.eventId,
             resource: event
         }; 
-        events.update(eventOptions,(err, res) => {
-            callback(err,res);
+        events.update(eventOptions,(err, event) => {
+            callback(err, event);
         });
     },
 
     // Get a specific calendar event from calendarId with eventId
     get(calendarId, eventId, callback){
         let eventOptions = {
-            auth: auth,
-            calendarId: calendarId,
-            eventId: eventId
+            auth,
+            calendarId,
+            eventId
         };
         events.get(eventOptions, (err, event) => {
             callback(err, event);
@@ -68,7 +66,7 @@ const eventsModel = {
     // Delete a specific calendar event 
     delete(event, callback){
         let eventOptions = {
-            auth: auth,
+            auth,
             calendarId: event.calendarId,
             eventId: event.eventId
         };
