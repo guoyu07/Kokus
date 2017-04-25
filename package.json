@@ -37,7 +37,9 @@
     "jwt-simple": "^0.5.1",
     "moment": "^2.18.1",
     "morgan": "^1.8.0",
-    "resource-router-middleware": "^0.6.0"
+    "pg": "^6.1.5",
+    "resource-router-middleware": "^0.6.0",
+    "squel": "^5.9.1"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
