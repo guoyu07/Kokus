@@ -1,21 +1,28 @@
-import google_jwt_client from './google/google_jwt_client';
-import google_user_client from './google/google_user_client';
+import googleJwtClient from './google/googleJwtClient';
+import googleUserClient from './google/googleUserClient';
+import postgresClient from './database/postgresClient';
+
 import config from '../config';
 
 const authorizer = {
     authorize(callback){
-        switch(config.authorize_method){
-            case 'google_jwt': 
-                google_jwt_client.authorize((err, authorizedClient) => {
+        switch(config.authorizeMethod.google){
+            case 'jwt': 
+                googleJwtClient.authorize((err, authorizedClient) => {
                     callback(err, authorizedClient);
                 });
                 break;
-            case 'google_client':
-                google_user_client.authorize((err, authorizedClient) => {
+            case 'client':
+                googleUserClient.authorize((err, authorizedClient) => {
                     callback(err, authorizedClient);
                 });
                 break;            
         }
+    },
+    connectDatabase: (callback) => {
+        postgresClient.authorize((err, client) => {
+            callback(err, client);
+        });
     }
 }
 
