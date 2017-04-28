@@ -22,7 +22,7 @@ export default ({ config, db }) => resource({
 	index({ params, baseUrl }, res) {
 		let calendarId = baseUrl.split("/")[3];
 		eventsModel.list(calendarId, (err, events) => {
-			event ? res.json(events) : res.json(err);
+			events ? res.json(events) : res.json(err);
 		});
 	},
 

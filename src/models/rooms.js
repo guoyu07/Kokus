@@ -10,7 +10,7 @@ const roomsModel = {
     read:   (room, callback) => {
         let statement = database.statementConstructor('SELECT', "rooms", room);
         database.query(statement, (err, data) => {
-            callback(err, result.rows[0]);
+            callback(err, data.rows[0]);
         });
     },
     update: (room, callback) => {
