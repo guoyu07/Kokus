@@ -2,8 +2,17 @@
 	"port": 5000,
 	"bodyLimit": "100kb",
 	"corsHeaders": ["Link"],
-	"authorize_method": "google_jwt",
-	"google_info": {
+	"authorizeMethod":{
+		"google": "jwt",
+		"postgres": ""
+	},
+	"databaseSettings": {
+		"databaseType": "postgres",
+		"host": "151.80.57.19",
+		"port": "5432",
+		"database": "admin_honeybase"
+	},
+	"googleInfo": {
 		"subject": "ss@coworkingplus.dk",
 		"credentials": "/home/thesinding/code/bookingBackend/src/credentials/moobook-d04d72b7dca7.json",
 		"scopes": [

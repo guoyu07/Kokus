@@ -1,6 +1,6 @@
 import googleAuth from 'google-auth-library';
 import google from 'googleapis';
-import config, { google_info } from '../../config';
+import config, { googleInfo } from '../../config';
 import CREDENTIALS from '../../credentials/moobook-d04d72b7dca7';
 
 
@@ -8,9 +8,9 @@ import CREDENTIALS from '../../credentials/moobook-d04d72b7dca7';
 const { 
     scopes:SCOPES,
     subject:SUBJECT 
-} = google_info;
+} = googleInfo;
 
-const google_jwt_client = {
+const googleJwtClient = {
     authorize(callback){
         let jwtClient = new google.auth.JWT(
             CREDENTIALS.client_email,
@@ -27,4 +27,4 @@ const google_jwt_client = {
     }
 }
 
-export default google_jwt_client;
+export default googleJwtClient;

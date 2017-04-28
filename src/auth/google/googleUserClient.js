@@ -1,6 +1,6 @@
 import googleAuth from 'google-auth-library';
 import google from 'googleapis';
-import config, { google_info } from '../../config';
+import config, { googleInfo } from '../../config';
 import web from '../../credentials/client_secret_362110245741-im59raf78epd98bbu0keril4d1f8ccp7.apps.googleusercontent.com';
 let OAuth2 = google.auth.OAuth2;
 
@@ -11,7 +11,7 @@ let OAuth2 = google.auth.OAuth2;
 // );
 
 
-const google_user_client = {
+const googleUserClient = {
     authorize(){
         console.log(web);
 
@@ -19,4 +19,4 @@ const google_user_client = {
 
 }
 
-export default google_user_client;
+export default googleUserClient;
