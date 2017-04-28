@@ -25,9 +25,7 @@ export default ({ config, db }) => resource({
 
 	/** POST / - Create a new entity */
 	create({ body }, res) {
-		body.id = facets.length.toString(36);
-		facets.push(body);
-		res.json(body);
+		res.json({"Error": "Not supported"});
 	},
 
 	/** GET /:id - Return a given entity */
