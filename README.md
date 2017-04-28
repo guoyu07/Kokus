@@ -1,3 +1,5 @@
+[![Build Status](https://semaphoreci.com/api/v1/thesinding/honeybase/branches/master/badge.svg)](https://semaphoreci.com/thesinding/honeybase)
+
 HoneyBase - Booking backend
 ==================================
 
