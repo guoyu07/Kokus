@@ -11,7 +11,6 @@ export default ({ config, db }) => resource({
 	 *  Errors terminate the request, success sets `req[id] = data`.
 	 */
 	load(req, id, callback) {
-		console.log(id);
 		roomsModel.read({ id: id }, (err, result) => {
 			err = result ? null : { 'error' : 'Not found' };
 			callback(err, result);
@@ -27,7 +26,10 @@ export default ({ config, db }) => resource({
 
 	/** POST / - Create a new entity */
 	create({ body }, res) {
-		res.json({"error": "Not supported yet"});
+		// The room details is in body
+		roomsModel.create(body, (err, data) => {
+			err ? res.json(err) : res.json(data);
+		});
 	},
 
 	/** GET /:id - Return a given entity */
