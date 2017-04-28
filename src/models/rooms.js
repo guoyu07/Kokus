@@ -11,7 +11,6 @@ const roomsModel = {
         let statement = database.statementConstructor('SELECT', "rooms", room);
         database.query(statement, (err, data) => {
             callback(err, data.rows[0]);
-            console.log("test");
         });
     },
     update: (room, callback) => {
