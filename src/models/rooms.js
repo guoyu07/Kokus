@@ -1,31 +1,38 @@
 import database from '../database';
+import sqlConstructor from '../lib/statementConstructor'
+
 
 const roomsModel = {
-    create: (roomData, callback) => {
-        let statement = database.statementConstructor('INSERT', "rooms", roomData);
+    list: (callback) =>{
+        let statement = sqlConstructor.select("rooms");
         database.query(statement, (err, data) => {
-            callback(err, data.rowCount > 0 ? { "Success": "Room created" } : null);
+            callback(err, data);
+         });
+    },
+    create: (room, callback) => {
+        let statement = sqlConstructor.insert("rooms", room);
+        database.query(statement, (err, data) => {
+            callback(err, data);
         });
     },
     read:   (room, callback) => {
-        let statement = database.statementConstructor('SELECT', "rooms", room);
+        let statement = sqlConstructor.select("rooms", room);
         database.query(statement, (err, data) => {
-            callback(err, data.rows[0]);
+            callback(err, data);
         });
     },
-    update: (room, callback) => {
-            
+    update: (roomId, room, callback) => {
+        let statement = sqlConstructor.update("rooms", roomId, room);
+        database.query(statement, (err, data) => {
+            callback(err, data);
+        });
     },
     delete: (room, callback) => {
-            
-    },
-    list: (callback) =>{
-        let statement = database.statementConstructor('SELECT', "rooms");
+        let statement = sqlConstructor.delete("room", room);
         database.query(statement, (err, data) => {
-            callback(err, data.rows.length > 0  ? data.rows : { "Error": "No rooms" });
-         });
-        },
- 
+            callback(err, data);
+        });
+    },
 };
 
 export default roomsModel;
