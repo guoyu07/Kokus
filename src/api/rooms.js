@@ -11,7 +11,7 @@ export default ({ config, db }) => resource({
 	 *  Errors terminate the request, success sets `req[id] = data`.
 	 */
 	load(req, id, callback) {
-		roomsModel.read({ id: id }, (err, result) => {
+		roomsModel.read({ room_id: id }, (err, result) => {
 			err = result ? null : { 'error' : 'Not found' };
 			callback(err, result);
 		});
@@ -20,6 +20,7 @@ export default ({ config, db }) => resource({
 	/** GET / - List all entities */
 	index({ params }, res) {
 		roomsModel.list((err, data) => {
+			data = err ? err : data;
 			res.json(data);
 		});
 	},
@@ -28,7 +29,8 @@ export default ({ config, db }) => resource({
 	create({ body }, res) {
 		// The room details is in body
 		roomsModel.create(body, (err, data) => {
-			err ? res.json(err) : res.json(data);
+			data = err ? err : data;
+			res.json(data);
 		});
 	},
 
@@ -38,9 +40,12 @@ export default ({ config, db }) => resource({
 	},
 
 	/** PUT /:id - Update a given entity */
-	update({ roomId, body }, res) {
-		// res.sendStatus(204);
-		res.json({"error": "Not supported yet"});
+	update({ params, body }, res) {
+		// TODO: add a checker to see if the room that is trying to be added
+		// actually exist.
+		roomsModel.update({ "room_id": params.roomId }, body, (err, data) => {
+			err ? res.json(err) : res.sendStatus(204);
+		});
 	},
 
 	/** DELETE /:id - Delete a given entity */
