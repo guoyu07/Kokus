@@ -28,7 +28,7 @@ const roomsModel = {
         });
     },
     delete: (room, callback) => {
-        let statement = sqlConstructor.delete("room", room);
+        let statement = sqlConstructor.delete("rooms", room);
         database.query(statement, (err, data) => {
             callback(err, data);
         });
