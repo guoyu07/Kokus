@@ -2,7 +2,7 @@ import resource from 'resource-router-middleware';
 import roomsModel from '../models/rooms';
 
 
-export default ({ config, db }) => resource({
+export default ({ config }) => resource({
 
 	/** Property name to store preloaded entity on `request`. */
 	id : 'roomId',
@@ -40,17 +40,24 @@ export default ({ config, db }) => resource({
 	},
 
 	/** PUT /:id - Update a given entity */
-	update({ params, body }, res) {
-		// TODO: add a checker to see if the room that is trying to be added
-		// actually exist.
-		roomsModel.update({ "room_id": params.roomId }, body, (err, data) => {
-			err ? res.json(err) : res.sendStatus(204);
-		});
+	update({ roomId, params, body }, res) {		
+		if(roomId.rowCount > 0){
+			roomsModel.update({ "room_id": params.roomId }, body, (err, data) => {
+				err ? res.json(err) : res.sendStatus(204);
+			});
+		} else {
+			res.json({"Error": "Room " + params.roomId + " doesnt exist!"});
+		}
 	},
 
 	/** DELETE /:id - Delete a given entity */
-	delete({ roomId }, res) {
-		// res.sendStatus(204);
-		res.json({"error": "Not supported yet"});
+	delete({ roomId, params, body }, res) {
+		if(roomId.rowCount > 0){
+			roomsModel.delete({ "room_id": params.roomId }, (err, data) => {
+				err ? res.json(err) : res.sendStatus(204);
+			});
+		} else {
+			res.json({"Error": "Room " + params.roomId + " doesnt exist!"});
+		}
 	}
 });

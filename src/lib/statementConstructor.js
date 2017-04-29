@@ -1,66 +1,90 @@
 import config from '../config';
-import squel from 'squel';
+import knex from 'knex';
 
-let sqlBuilder = squel.useFlavour(config.databaseType);
-
+let builder = new knex({ client: config.databaseSettings.databaseType });
 
 const sqlConstructor = {
+    /**
+     * Table can be an array of tables ['foo', 'bar', ...];
+     * Data is an Object eg {'foo': 'foo', 'bar': 'bar', ... };
+     * 
+     * @param table String
+     * @param table Array
+     * @param data Object 
+     * @param data String 
+     * 
+     */
     insert: (table, data) => {
-        let sql = sqlBuilder.insert().into(table);
-        
-        for (let key in data) {
-            if (data.hasOwnProperty(key)) {
-                sql.set(key, data[key]);
-            }
+        let sql = builder.into(table);
+        if(data){
+            sql.insert(data);
         }
         return sql.toString();  
     },
     /**
-     * update can accept table as an array
+     * Table can be an array of tables ['foo', 'bar', ...];
+     * Params is where you want updated eg {'foo_id': 1, 'bar_id': 2, ... };
+     * Params can be a String too eg "foo_id = 1"
+     * Data is what you want updated eg {'foo_name': 'bar', ... }
+     * 
      * @param table String
      * @param table Array
+     * @param params Object 
+     * @param params String 
+     * @param data Object 
+     * 
      */
-    update: (table, id, data) => {
-        let sql = sqlBuilder.update();
-        if(table.constructor == Array){
-            table.forEach((t) => {
-                sql.table(t);
-            });
-        } else {
-            sql.table(table);
+    update: (table, data, params) => {
+        let sql = builder.into(table);
+        if(params){
+            sql.update(data);
         }
-        if(id){
-            for (let key in id) {
-                if (id.hasOwnProperty(key)) {
-                   sql.where(key +"= '" + id[key] +"'");
-                }
-            }
-        }
-        if(data){
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
-                    sql.set(key, data[key]);
-                }
-            }
+        if(params){
+            sql.where(params);
         }
         return sql.toString();
     },
-    select: (table, data) => {
-        let sql = sqlBuilder.select().from(table);
+    /**
+     * Table can be an array of tables ['foo', 'bar', ...];
+     * Data is "where foo = bar". This can be an object or String
+     * params is what you want as an array ['foo', 'bar', 'foo.name', ...];
+     * 
+     * @param params String
+     * @param params Array
+     * 
+     * @param data Object
+     * @param data String
+     * 
+     * @param table Array
+     * @param table String
+     */
+    select: (table, data, params) => {
+        let sql = builder.select().from(table);
+        if(params){
+            sql.select(params);
+        }
         if(data){
-            for (let key in data) {
-                // This is flawed, it will keep adding where clauses
-                // it should add " AND " instead. Fix incoming
-                if (data.hasOwnProperty(key)) {
-                    sql.where(key +"= '" + data[key] +"'");
-                }
-            }
+            sql.where(data);
         }
         return sql.toString();
     },
+    /**
+     * Table can be an array of tables ['foo', 'bar', ...];
+     * Data is "where foo = bar". This can be an object or String 
+     * 
+     * @param data Object
+     * @param data String
+     * 
+     * @param table Array
+     * @param table String
+     */
     delete: (table, data) => {
+        let sql = builder.delete().from(table);
+        if(data){
+            sql.where(data);
+        }
+        return sql.toString();
     }
-}
-
+};
 
 export default sqlConstructor;
