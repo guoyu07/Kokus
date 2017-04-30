@@ -1,14 +1,23 @@
 import { version, name, description } from '../../package.json';
 import { Router } from 'express';
 import calendars from './calendars';
+import authenticate from './authenticate';
 import events from './events';
 import calendarsAdmin from './calendarsAdmin';
 import rooms from './rooms';
 import roomEvents from './rooms/events';
+import apikeyMiddleware from '../middleware/apikeyMiddleware';
 
 export default ({ config, db }) => {
 	let api = Router();
 
+	// Make sure authenticate is not a protected route
+	// eg it has to be above the middleware
+	api.use('/authenticate', authenticate({ config }));
+	
+	// check api key
+	api.use(apikeyMiddleware);
+	
 	// mount the facets resource
 	api.use('/calendars', calendars({ config }));
 	api.use('/calendars/:calid/events', events({ config }));
