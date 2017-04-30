@@ -8,7 +8,7 @@ let { events } = calendar;
  
 let auth = {};
 // Get authorization from google with the credentials.
-authorizer.authorize((err, JWTToken) => {
+authorizer.google.authorize((err, JWTToken) => {
     if(err) throw(err);
 
     // Store the authorization in the auth object

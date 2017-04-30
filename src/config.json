@@ -6,6 +6,9 @@
 		"google": "jwt",
 		"postgres": ""
 	},
+	"jwt": {
+		"expire": 1440
+	},
 	"databaseSettings": {
 		"databaseType": "pg",
 		"host": "151.80.57.19",

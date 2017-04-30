@@ -3,7 +3,7 @@ import google from 'googleapis';
 
 let calendar = google.calendar('v3');
 let auth = {};
-authorizer.authorize((err, res) => {
+authorizer.google.authorize((err, res) => {
     if(err) throw(err);
     auth = res;
 });

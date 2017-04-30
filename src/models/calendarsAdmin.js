@@ -7,7 +7,7 @@ let adminCalendar = google.admin('directory_v1');
 
 let auth = {};
 // Get authorization from google with the credentials.
-authorizer.authorize((err, res) => {
+authorizer.google.authorize((err, res) => {
     if(err) throw(err);
 
     // Store the authorization in the auth object
