@@ -46,7 +46,7 @@ export default ({ config }) => resource({
 	/** PUT /:id - Update a given entity */
 	update({ roomId, params, body }, res) {	
 		if(roomId.status == 'error'){
-			 res.send(roomId);
+			res.send(roomId);
 		} else {	
 			roomsModel.update({ "room_id": roomId.room_id }, (err, data) => {
 				err ? res.send(jsend.error(data)) : res.status(204).send(jsend.success(data));
@@ -57,7 +57,7 @@ export default ({ config }) => resource({
 	/** DELETE /:id - Delete a given entity */
 	delete({ roomId, body }, res) {
 		if(roomId.status == 'error'){
-			 res.send(roomId);
+			res.send(roomId);
 		} else {
 			roomsModel.delete({ "room_id": roomId.room_id }, (err, data) => {
 				err ? res.send(jsend.error(data)) : res.status(204).send(jsend.success(data));
