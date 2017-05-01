@@ -34,6 +34,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "googleapis": "^19.0.0",
+    "jsend": "^1.0.2",
     "jsonwebtoken": "^7.4.0",
     "jwt-simple": "^0.5.1",
     "knex": "^0.12.9",

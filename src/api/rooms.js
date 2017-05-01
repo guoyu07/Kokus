@@ -1,6 +1,6 @@
 import resource from 'resource-router-middleware';
 import roomsModel from '../models/rooms';
-
+import jsend from 'jsend';
 
 export default ({ config }) => resource({
 
@@ -12,15 +12,19 @@ export default ({ config }) => resource({
 	 */
 	load(req, id, callback) {
 		roomsModel.read({ room_id: id }, (err, result) => {
-			err = result ? null : { 'error' : 'Not found' };
-			callback(err, result);
+			err = result ? null : jsend.error('Not found!');
+			if(result.rowCount > 0){
+				callback(err, result.rows[0]);
+			} else {
+				callback(err, jsend.error("Room " + id + " doesnt exist!"));
+			}
 		});
 	},
 
 	/** GET / - List all entities */
 	index({ params }, res) {
 		roomsModel.list((err, data) => {
-			data = err ? err : data;
+			data = err ? jsend.error(err) : jsend.success(data.rows);
 			res.json(data);
 		});
 	},
@@ -29,7 +33,7 @@ export default ({ config }) => resource({
 	create({ body }, res) {
 		// The room details is in body
 		roomsModel.create(body, (err, data) => {
-			data = err ? err : data;
+			data = err ? jsend.error(err) : jsend.success(data);
 			res.json(data);
 		});
 	},
@@ -40,24 +44,24 @@ export default ({ config }) => resource({
 	},
 
 	/** PUT /:id - Update a given entity */
-	update({ roomId, params, body }, res) {		
-		if(roomId.rowCount > 0){
-			roomsModel.update({ "room_id": params.roomId }, body, (err, data) => {
-				err ? res.json(err) : res.sendStatus(204);
+	update({ roomId, params, body }, res) {	
+		if(roomId.status == 'error'){
+			 res.send(roomId);
+		} else {	
+			roomsModel.update({ "room_id": roomId.room_id }, (err, data) => {
+				err ? res.send(jsend.error(data)) : res.status(204).send(jsend.success(data));
 			});
-		} else {
-			res.json({"Error": "Room " + params.roomId + " doesnt exist!"});
 		}
 	},
 
 	/** DELETE /:id - Delete a given entity */
-	delete({ roomId, params, body }, res) {
-		if(roomId.rowCount > 0){
-			roomsModel.delete({ "room_id": params.roomId }, (err, data) => {
-				err ? res.json(err) : res.sendStatus(204);
-			});
+	delete({ roomId, body }, res) {
+		if(roomId.status == 'error'){
+			 res.send(roomId);
 		} else {
-			res.json({"Error": "Room " + params.roomId + " doesnt exist!"});
+			roomsModel.delete({ "room_id": roomId.room_id }, (err, data) => {
+				err ? res.send(jsend.error(data)) : res.status(204).send(jsend.success(data));
+			});
 		}
 	}
 });
