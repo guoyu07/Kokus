@@ -10,7 +10,10 @@ import apikeyMiddleware from '../middleware/apikeyMiddleware';
 
 export default ({ config, db }) => {
 	let api = Router();
-
+	api.get('/*',function(req,res,next){
+		res.header('Content-Type','application/json');
+		next();
+	});
 	// Make sure authenticate is not a protected route
 	// eg it has to be above the middleware
 	api.use('/authenticate', authenticate({ config }));
