@@ -1,6 +1,5 @@
 import resource from 'resource-router-middleware';
 import roomsModel from '../../models/rooms/rooms';
-import jsend from 'jsend';
 
 export default ({ config }) => resource({
 
@@ -13,7 +12,7 @@ export default ({ config }) => resource({
 	load(req, id, callback) {
 		roomsModel.read({ room_id: id }, (err, result) => {
 			// Check if the result from the database has any rows.
-			err = result.rowCount !== 0 ? null : jsend.error('Room with ID ' + id + ' doesnt exist!');
+			err = result.rowCount !== 0 ? null :  {'status': 'error', 'message': 'Room with ID ' + id + ' doesnt exist!'};
 			callback(err, result.rows[0]);
 		});
 	},
@@ -21,7 +20,8 @@ export default ({ config }) => resource({
 	/** GET / - List all entities */
 	index({ params }, res) {
 		roomsModel.list((err, data) => {
-			err ? res.send(jsend.error(err)) : res.send(jsend.success(data.rows));
+			if(err) return res.jsend.error(err);
+			res.jsend.success(data);
 		});
 	},
 
@@ -29,13 +29,14 @@ export default ({ config }) => resource({
 	create({ body }, res) {
 		// The room details is in body
 		roomsModel.create(body, (err, data) => {
-			err ? res.send(jsend.error(err)) : res.send(jsend.success(data));
+			if(err) return res.jsend.error(err);
+			res.jsend.success(data);
 		});
 	},
 
 	/** GET /:id - Return a given entity */
 	read({ roomId }, res) {
-		res.send(jsend.success(roomId));
+		res.jsend.success(data);
 	},
 
 	/** PUT /:id - Update a given entity */
