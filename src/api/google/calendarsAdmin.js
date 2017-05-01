@@ -1,5 +1,5 @@
 import resource from 'resource-router-middleware';
-import calendarsAdmin from '../models/calendarsAdmin';
+import googleCalendarsAdmin from '../../models/google/calendarsAdmin';
 
 export default ({ config, db }) => resource({
 
@@ -11,14 +11,14 @@ export default ({ config, db }) => resource({
 	 */
 	load(req, id, callback) {
 		// Get a calendar resource id
-		calendarsAdmin.get(id, (err, calendar) => {
+		googleCalendarsAdmin.get(id, (err, calendar) => {
 			callback(err, calendar);
 		});
 	},
 
 	/** GET / - List all entities */
 	index({ params }, res) {
-		calendarsAdmin.list((err, calendars) => {
+		googleCalendarsAdmin.list((err, calendars) => {
 			res.json(calendars.items);
 		});
 	},

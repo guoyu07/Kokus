@@ -1,4 +1,4 @@
-import authorizer from '../auth';
+import authorizer from '../../auth';
 import google from 'googleapis';
 
 let calendar = google.calendar('v3');
@@ -7,7 +7,7 @@ authorizer.google.authorize((err, res) => {
     if(err) throw(err);
     auth = res;
 });
-const calendars = {
+const googleCalendars = {
     calendarList:{
         list(callback) {
             calendar.calendarList.list(
@@ -37,4 +37,4 @@ const calendars = {
 
     }
 }
-export default calendars;
+export default googleCalendars;

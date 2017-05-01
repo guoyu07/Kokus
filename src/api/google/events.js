@@ -1,5 +1,5 @@
 import resource from 'resource-router-middleware';
-import eventsModel from '../models/events';
+import googleEventsModel from '../../models/google/events';
 
 
 export default ({ config, db }) => resource({
@@ -13,7 +13,7 @@ export default ({ config, db }) => resource({
 	load(req, eventId, callback) {
 		// Get a calendar resource id
 		let calendarId = req.baseUrl.split("/")[3];
-		eventsModel.get(calendarId, eventId, (err, event) => {
+		googleEventsModel.get(calendarId, eventId, (err, event) => {
 			callback(err, event);
 		});
 	},
@@ -21,7 +21,7 @@ export default ({ config, db }) => resource({
 	/** GET / - List all entities */
 	index({ params, baseUrl }, res) {
 		let calendarId = baseUrl.split("/")[3];
-		eventsModel.list(calendarId, (err, events) => {
+		googleEventsModel.list(calendarId, (err, events) => {
 			events ? res.json(events) : res.json(err);
 		});
 	},
@@ -29,7 +29,7 @@ export default ({ config, db }) => resource({
 	/** POST / - Create a new entity */
 	create({ body, baseUrl }, res) {
 		body.calendarId = baseUrl.split("/")[3]; 		
-		eventsModel.create(body, (err, event) => {
+		googleEventsModel.create(body, (err, event) => {
 			event ? res.json(event) : res.json(err);
 		});
 	},
@@ -43,7 +43,7 @@ export default ({ config, db }) => resource({
 	update({ body, params, baseUrl }, res) {
 		body.calendarId = baseUrl.split("/")[3];
 		body.eventId = params.eventId;	
-		eventsModel.update(body, (err, event) => {
+		googleEventsModel.update(body, (err, event) => {
 			event ? res.json(event) : res.json(err);
 		});
 	},
@@ -55,7 +55,7 @@ export default ({ config, db }) => resource({
 			calendarId,
 			eventId: params.eventId
 		};
-		eventsModel.delete(event, (err, event) => {
+		googleEventsModel.delete(event, (err, event) => {
 			err ? res.json(err) : res.sendStatus(204);
 		});
 	}

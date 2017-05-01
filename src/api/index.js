@@ -1,11 +1,12 @@
 import { version, name, description } from '../../package.json';
 import { Router } from 'express';
-import calendars from './calendars';
+import calendars from './google/calendars';
 import authenticate from './authenticate';
-import events from './events';
-import calendarsAdmin from './calendarsAdmin';
-import rooms from './rooms';
+import events from './google/events';
+import calendarsAdmin from './google/calendarsAdmin';
+import rooms from './rooms/rooms';
 import roomEvents from './rooms/events';
+import settings from './settings';
 import apikeyMiddleware from '../middleware/apikeyMiddleware';
 
 export default ({ config, db }) => {
@@ -27,6 +28,7 @@ export default ({ config, db }) => {
 	api.use('/admin/calendars', calendarsAdmin({ config }));
 	api.use('/rooms', rooms({ config }));
 	api.use('/rooms/:roomid/events', roomEvents({ config }));
+	api.use('/settings', settings({ config }));
 
 	// perhaps expose some API metadata at the root
 	api.get('/', (req, res) => {

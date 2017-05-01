@@ -1,5 +1,5 @@
-import database from '../database';
-import sqlConstructor from '../lib/statementConstructor';
+import database from '../../database';
+import sqlConstructor from '../../lib/statementConstructor';
 
 
 const roomsModel = {

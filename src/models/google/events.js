@@ -1,4 +1,4 @@
-import authorizer from '../auth';
+import authorizer from '../../auth';
 import google from 'googleapis';
 
 // Create calendar object
@@ -14,7 +14,7 @@ authorizer.google.authorize((err, JWTToken) => {
     // Store the authorization in the auth object
     auth = JWTToken;
 });
-const eventsModel = {
+const googleEventsModel = {
     // List all calendar events
     list(calendarId, callback){
         let eventOptions = {
@@ -75,4 +75,4 @@ const eventsModel = {
         });
     }
 }
-export default eventsModel;
+export default googleEventsModel;

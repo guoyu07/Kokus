@@ -1,5 +1,5 @@
 import resource from 'resource-router-middleware';
-import calendars from '../models/calendars';
+import googleCalendars from '../../models/google/calendars';
 
 export default ({ config, db }) => resource({
 
@@ -11,14 +11,14 @@ export default ({ config, db }) => resource({
 	 */
 	load(req, id, callback) {
 		// Get a calendar resource id
-		calendars.calendarList.get(id, (err, calendar) => {
+		googleCalendars.calendarList.get(id, (err, calendar) => {
 			callback(err, calendar);
 		});
 	},
 
 	/** GET / - List all entities */
 	index({ params }, res) {
-		calendars.calendarList.list((err, calendars) => {
+		googleCalendars.calendarList.list((err, calendars) => {
 			res.json(calendars.items);
 		});
 	},

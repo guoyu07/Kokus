@@ -1,5 +1,4 @@
-// import jwtClient from '../auth/jwtClient';
-import authorizer from '../auth';
+import authorizer from '../../auth';
 
 import google from 'googleapis';
 
@@ -14,7 +13,7 @@ authorizer.google.authorize((err, res) => {
     auth = res;
 });
 
-const calendarsAdmin = {
+const googleCalendarsAdmin = {
     list(callback){
         adminCalendar.resources.calendars.list(
             {
@@ -40,4 +39,4 @@ const calendarsAdmin = {
         );
     }
 }
-export default calendarsAdmin;
+export default googleCalendarsAdmin;
