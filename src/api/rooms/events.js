@@ -1,5 +1,5 @@
 import resource from 'resource-router-middleware';
-import roomEventsModel from '../../models/roomEvents';
+import roomEventsModel from '../../models/rooms/roomEvents';
 import jsend from 'jsend';
 
 export default ({ config, db }) => resource({
