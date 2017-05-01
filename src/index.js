@@ -7,6 +7,7 @@ import initializeDb from './db';
 import middleware from './middleware';
 import api from './api';
 import config from './config.json';
+import jsend from 'jsend';
 
 
 let app = express();
@@ -19,7 +20,7 @@ app.use(morgan('dev'));
 app.use(cors({
 	exposedHeaders: config.corsHeaders
 }));
-
+app.use(jsend.middleware);
 app.use(bodyParser.json({
 	limit : config.bodyLimit
 }));
