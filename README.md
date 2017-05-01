@@ -7,6 +7,7 @@ HoneyBase - Booking backend
 - Build as a REST API
 - CORS support via [cors](https://github.com/troygoode/node-cors)
 - Body Parsing via [body-parser](https://github.com/expressjs/body-parser)
+- JSend Middleware via [JSend](https://github.com/Prestaul/jsend) **Awesome!**
 
 Getting Started
 ---------------
