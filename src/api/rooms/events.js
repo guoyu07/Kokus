@@ -22,7 +22,7 @@ export default ({ config, db }) => resource({
 	index({ baseUrl }, res) {
 		let roomId = baseUrl.split("/")[3];
 		roomEventsModel.list({ 'room_id': roomId }, (err, data) => {
-			if(err) return res.jsend.error(err);
+			if(err) return res.status(404).jsend.error(err);
 			res.jsend.success(data);
 		});
 	},
@@ -31,7 +31,7 @@ export default ({ config, db }) => resource({
 	create({ body, baseUrl }, res) {
 		body.room_id = baseUrl.split("/")[3]; 		
 		roomEventsModel.create(body, (err, data) => {
-			if(err) return res.jsend.error(err);
+			if(err) return res.status(404).jsend.error(err);
 			 res.jsend.success(data);
 		});
 	},
@@ -44,7 +44,7 @@ export default ({ config, db }) => resource({
 	/** PUT /:id - Update a given entity */
 	update({ body, params }, res) {
 		roomEventsModel.update({ 'id': params.eventId } , body, (err, data) => {
-			if(err) return res.jsend.error(err);
+			if(err) return res.status(404).jsend.error(err);
 			res.jsend.success(data);
 		});
 	},
@@ -52,7 +52,7 @@ export default ({ config, db }) => resource({
 	/** DELETE /:id - Delete a given entity */
 	delete({ params }, res) {
 		roomEventsModel.delete({'id': params.eventId }, (err, data) => {
-			if(err) return res.jsend.error(err);
+			if(err) return res.status(404).jsend.error(err);
 			res.jsend.success(data);
 		});
 	}

@@ -20,7 +20,7 @@ export default ({ config }) => resource({
 	/** GET / - List all entities */
 	index({ params }, res) {
 		roomsModel.list((err, data) => {
-			if(err) return res.jsend.error(err);
+			if(err) return res.status(404).jsend.error(err);
 			res.jsend.success(data);
 		});
 	},
@@ -29,7 +29,7 @@ export default ({ config }) => resource({
 	create({ body }, res) {
 		// The room details is in body
 		roomsModel.create(body, (err, data) => {
-			if(err) return res.jsend.error(err);
+			if(err) return res.jsend.status(404).error(err);
 			res.jsend.success(data);
 		});
 	},
@@ -42,14 +42,16 @@ export default ({ config }) => resource({
 	/** PUT /:id - Update a given entity */
 	update({ roomId, params, body }, res) {
 		roomsModel.update({ "room_id": roomId.room_id }, (err, data) => {
-			err ? res.send(jsend.error(data)) : res.status(204).send(jsend.success(data));
+			if(err) return res.status(404).jsend.error(err);
+			res.status(204).jsend.success(data);
 		});
 	},
 
 	/** DELETE /:id - Delete a given entity */
 	delete({ roomId, body }, res) {
 		roomsModel.delete({ "room_id": roomId.room_id }, (err, data) => {
-			err ? res.send(jsend.error(data)) : res.status(204).send(jsend.success(data));
+			if(err) return res.status(404).jsend.error(err);
+			res.status(204).jsend.success(data);
 		});
 	}
 });
