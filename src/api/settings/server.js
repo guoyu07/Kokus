@@ -11,7 +11,7 @@ export default ({ config, db }) => resource({
 	 */
 	load(req, id, callback) {
 		serverSettingsModel.find(id, (err, setting) => {
-		    callback(err, setting);
+			callback(err, setting);
         });
 	},
 

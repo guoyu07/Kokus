@@ -36,7 +36,7 @@ export default ({ config }) => resource({
 
 	/** GET /:id - Return a given entity */
 	read({ roomId }, res) {
-		res.jsend.success(data);
+		res.jsend.success(roomId);
 	},
 
 	/** PUT /:id - Update a given entity */

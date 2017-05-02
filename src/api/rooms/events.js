@@ -32,7 +32,7 @@ export default ({ config, db }) => resource({
 		body.room_id = baseUrl.split("/")[3]; 		
 		roomEventsModel.create(body, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
-			 res.jsend.success(data);
+			res.jsend.success(data);
 		});
 	},
 
