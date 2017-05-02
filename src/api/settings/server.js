@@ -32,10 +32,10 @@ export default ({ config, db }) => resource({
 
 	/** PUT /:id - Update a given entity */
 	update({ body }, res) {
-        // serverSettingsModel.set(body.setting, body.value);
-		res.status(404).jsend.error('PUT Not supported yet!');
-        
-		// res.status(204).jsend.success({ messsage: 'Setting updated!' });
+        serverSettingsModel.set(body.setting, body.value, (err, data) => {
+			if(err) return res.status(404).jsend.error(err);
+			res.jsend.success(data);
+		});
 	},
 
 	/** DELETE /:id - Delete a given entity */
