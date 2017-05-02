@@ -27,7 +27,7 @@ const authorizer = {
     authorizeApi: (key, callback) => {
         let statement = sqlConstructor.select('apikeys', { 'key': key });
         database.query(statement, (err, res) => {
-            if (err) throw(err);
+            if (err) return err;
             if(res.rowCount > 0){
                 jwt.sign(res.rows[0], secret.secret, (err, token) => {
                     callback(err, token);
