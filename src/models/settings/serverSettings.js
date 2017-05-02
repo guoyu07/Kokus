@@ -1,9 +1,16 @@
-import { serverConfig } from '../../configs';
+import { serverConfig, paths } from '../../configs';
+import fs from 'fs';
+import path from 'path';
 
 
 const serverSettigsModel = {
-    set: (key, value) => {
+    set: (key, value, callback) => {
+        if(!serverConfig.hasOwnProperty(key)) return callback('Setting doesn\'t exist', null);
         serverConfig[key] = value;
+        let save = JSON.stringify(serverConfig);
+        fs.writeFile(paths.serverConfigPath, save,'UTF-8', (err, data)=> {
+            callback(err, data);
+        });
     },
     get: (key) => {
         return serverConfig[key];
