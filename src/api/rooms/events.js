@@ -19,11 +19,12 @@ export default ({ config, db }) => resource({
 	},
 
 	/** GET / - List all entities */
-	index({ baseUrl }, res) {
+	index({ baseUrl, query }, res) {
 		let roomId = baseUrl.split("/")[3];
-		roomEventsModel.list({ 'room_id': roomId }, (err, data) => {
+		let data = Object.assign({'room_id': roomId}, query);
+		roomEventsModel.list(data, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
-			res.jsend.success(data);
+			res.jsend.success(data.rows);
 		});
 	},
 
