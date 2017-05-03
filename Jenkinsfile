@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Stop PM2 Process') {
       steps {
-        sh 'pm2 stop HoneyBase # Stop HoneyBase'
+        sh 'pm2 stop HoneyBase'
       }
     }
     stage('Pull') {
