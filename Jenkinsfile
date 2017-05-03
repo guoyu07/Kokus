@@ -8,7 +8,8 @@ pipeline {
     }
     stage('Er') {
       steps {
-        sh 'sh ./Honeybase_deploy'
+        sh '''ls
+sh ./Honeybase_deploy'''
       }
     }
   }
