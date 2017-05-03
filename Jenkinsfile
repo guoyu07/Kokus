@@ -8,7 +8,8 @@ pipeline {
     }
     stage('Er') {
       steps {
-        sh 'sh ./Honeybase_deploy /root/node_apps/HoneyBase'
+        sh '''cat Honeybase_deploy
+sh ./Honeybase_deploy /root/node_apps/HoneyBase'''
       }
     }
   }
