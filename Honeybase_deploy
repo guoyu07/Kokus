@@ -1,0 +1,45 @@
+#!/bin/bash
+# Jenkins Deploy Script
+# Written by Simon Sinding - 2017 Github.com/TheSinding/
+
+
+# The app name
+APP_NAME="HoneyBase"
+
+# Path to the app clone.
+APP_DIR="$HOME/clones/$APP_NAME"
+
+hash pm2 2>/dev/null ||
+{
+	echo >&2 "Error: PM2 is required but it's not installed.  Aborting.";
+#	exit 1;
+}
+hash yarn 2>/dev/null ||
+{
+	echo >&2 "Error: Yarn is required but it's not installed.  Aborting.";
+	exit 1;
+}
+# Check if the app dir exist
+if [ ! -d $APP_DIR ]; then
+	echo "Error: $APP_DIR does not exist!"
+	#exit 1;
+fi
+
+# Build the node app
+BUILD(){
+	rm -rf dist;
+	yarn build;
+}
+
+
+# Run test's
+TEST(){
+	yarn test;
+}
+
+DEPLOY(){
+				echo $(pwd);
+				ls;
+}
+
+DEPLOY
