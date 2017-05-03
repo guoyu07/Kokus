@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Stop PM2 Process') {
       steps {
-        sh 'pwd'
+        sh 'sh \'./Honeybase_deploy\''
       }
     }
     stage('Pull') {
