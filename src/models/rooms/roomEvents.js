@@ -16,7 +16,6 @@ const roomEventsModel = {
                 }
             }
             data = Object.assign(data, week);
-            console.log(data);
         }
 
         let statement = sqlConstructor.select('events', data);

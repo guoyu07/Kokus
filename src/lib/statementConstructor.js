@@ -74,7 +74,6 @@ const sqlConstructor = {
             }
             sql.where(data);
         }
-        console.log(sql.toString());
         return sql.toString();
     },
     /**
