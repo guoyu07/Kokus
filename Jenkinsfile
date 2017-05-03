@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Er') {
       steps {
-        sh '''ls
+        sh '''chmod +x Honeybase_deploy
 sh ./Honeybase_deploy'''
       }
     }
