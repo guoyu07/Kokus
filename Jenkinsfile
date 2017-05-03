@@ -1,11 +1,6 @@
 pipeline {
   agent any
   stages {
-    stage('Change dir') {
-      steps {
-        dir(path: '/root/clones/scripts')
-      }
-    }
     stage('Stop PM2 Process') {
       steps {
         sh 'sh ./Honeybase_deploy'
