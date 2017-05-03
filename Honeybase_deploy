@@ -5,7 +5,8 @@
 
 # The app name
 APP_NAME="HoneyBase"
-
+ARG="$@"
+echo $ARG
 # Path to the app clone.
 APP_DIR="$HOME/node_apps/$APP_NAME"
 
@@ -50,6 +51,9 @@ TEST(){
 }
 
 DEPLOY(){
+	if [ -d $ARG ]; then
+					APP_DIR=$ARG
+	fi
 	mv dist/ $APP_DIR
 	pm2 start $APP_DIR/index.js --name $APP_NAME
 	pm2 save
