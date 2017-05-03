@@ -17,7 +17,7 @@ error_exit()
 
 hash pm2 2>/dev/null ||
 {
-#	error_exit "Error: PM2 is required but it's not installed.  Aborting.";
+	error_exit "Error: PM2 is required but it's not installed.  Aborting.";
 }
 hash yarn 2>/dev/null ||
 {
