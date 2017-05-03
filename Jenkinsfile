@@ -8,8 +8,7 @@ pipeline {
     }
     stage('Er') {
       steps {
-        sh '''pwd
-sh ./Honeybase_deploy /root/node_apps/HoneyBase'''
+        sh 'sh ./Honeybase_deploy /opt/node_apps/HoneyBase'
       }
     }
   }
