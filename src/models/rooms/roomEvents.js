@@ -1,9 +1,25 @@
 import database from '../../database';
 import sqlConstructor from '../../lib/statementConstructor';
+import dateFilter from '../../lib/dateFilter';
+
 
 const roomEventsModel = {
-    list: (roomId, callback) =>{
-        let statement = sqlConstructor.select('events', roomId);
+    list: (data, callback) =>{
+        if(data.filter == 'false' || data.filter == false){
+            delete data.filter;
+        } else {
+            let week = {
+                between: {
+                    attribute: 'start_time', 
+                    first: dateFilter.getWeek().first,
+                    last: dateFilter.getWeek().last
+                }
+            }
+            data = Object.assign(data, week);
+            console.log(data);
+        }
+
+        let statement = sqlConstructor.select('events', data);
         database.query(statement, (err, event) => {
             callback(err, event);
          });

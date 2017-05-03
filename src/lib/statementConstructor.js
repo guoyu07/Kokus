@@ -36,7 +36,7 @@ const sqlConstructor = {
      */
     update: (table, data, params) => {
         let sql = builder.into(table);
-        if(params){
+        if(data){
             sql.update(data);
         }
         if(params){
@@ -64,8 +64,17 @@ const sqlConstructor = {
             sql.select(params);
         }
         if(data){
+            if(data.filter){
+                sql = helpers.filter(sql, data.filter);
+                delete data.filter;
+            }
+            if(data.between){
+                sql = helpers.between(sql, data.between);
+                delete data.between;
+            }
             sql.where(data);
         }
+        console.log(sql.toString());
         return sql.toString();
     },
     /**
@@ -85,6 +94,28 @@ const sqlConstructor = {
         }
         return sql.toString();
     }
-};
 
+};
+const helpers = {
+    between: (sql, between) => {
+        if(Array.isArray(between)) {
+            between.forEach((element) => {
+                sql.whereBetween(element.attribute, [element.first, element.last]);     
+            });
+        } else {
+            sql.whereBetween(between.attribute, [between.first, between.last]);
+        }
+        return sql;
+    },
+    filter: (sql, filter) => {
+        if(Array.isArray(filter)) {
+            filter.forEach((element) => {
+                sql.where(element.first, element.operator, element.last);     
+            });
+        } else {
+            sql.where(filter.first, filter.operator, filter.last);
+        }
+        return sql;
+    }
+}
 export default sqlConstructor;
