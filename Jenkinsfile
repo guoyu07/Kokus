@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Er') {
       steps {
-        sh '''cat Honeybase_deploy
+        sh '''pwd
 sh ./Honeybase_deploy /root/node_apps/HoneyBase'''
       }
     }
