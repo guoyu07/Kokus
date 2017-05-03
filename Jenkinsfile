@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Er') {
       steps {
-        echo 'asdf'
+        sh 'sh \'./Honeybase_deploy\''
       }
     }
   }
