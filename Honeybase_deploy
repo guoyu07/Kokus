@@ -6,7 +6,6 @@
 # The app name
 APP_NAME="HoneyBase"
 ARG="$@"
-echo $ARG
 # Path to the app clone.
 APP_DIR="$HOME/node_apps/$APP_NAME"
 
@@ -25,6 +24,12 @@ hash yarn 2>/dev/null ||
 	error_exit "Error: Yarn is required but it's not installed.  Aborting.";
 }
 # Check if the app dir exist
+if [ -d "$ARG" ]; then
+					echo "$ARG exist, using this as a deploy"
+					APP_DIR=$ARG
+					echo $APP_DIR
+fi
+
 if [ ! -d $APP_DIR ]; then
 	error_exit "Error: $APP_DIR does not exist!"
 fi
@@ -51,9 +56,6 @@ TEST(){
 }
 
 DEPLOY(){
-	if [ -d $ARG ]; then
-					APP_DIR=$ARG
-	fi
 	mv dist/ $APP_DIR
 	pm2 start $APP_DIR/index.js --name $APP_NAME
 	pm2 save
