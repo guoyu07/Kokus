@@ -9,7 +9,7 @@ APP_NAME="HoneyBase"
 # Path to the app clone.
 APP_DIR="$HOME/node_apps/$APP_NAME"
 
-function error_exit
+error_exit()
 {
 	echo "$1" 1>&2
 	exit 1
