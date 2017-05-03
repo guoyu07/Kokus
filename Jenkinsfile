@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Stop PM2 Process') {
       steps {
-        sh 'pm2'
+        sh 'pm2 stop HoneyBase'
       }
     }
     stage('Pull') {
