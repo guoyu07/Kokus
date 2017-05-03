@@ -6,7 +6,7 @@ pipeline {
         git(url: 'https://github.com/coworkingplus/HoneyBase', branch: 'master')
       }
     }
-    stage('') {
+    stage('Er') {
       steps {
         sh 'sh ./Honeybase_deploy'
       }
