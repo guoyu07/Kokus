@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('Change dir') {
       steps {
-        sh '''# Change to HoneyBase
-cd /root/clones/HoneyBase'''
+        dir(path: '/root/clones/HoneyBase')
       }
     }
     stage('Stop PM2 Process') {
@@ -14,10 +13,7 @@ cd /root/clones/HoneyBase'''
     }
     stage('Pull') {
       steps {
-        sh '''# Fetch the new changes to master
-git fetch --all 
-# Something
-git reset --hard origin/master '''
+        git(url: 'https://github.com/coworkingplus/HoneyBase.git', branch: 'master')
       }
     }
     stage('Test') {
