@@ -7,7 +7,7 @@
 APP_NAME="HoneyBase"
 ARG="$@"
 # Path to the app clone.
-APP_DIR="$HOME/node_apps/$APP_NAME"
+APP_DIR="/opt/node_apps/$APP_NAME"
 
 error_exit()
 {
@@ -38,6 +38,7 @@ STOP_CURRENT_PROCESS(){
 }
 # Build the node app
 BUILD(){
+	yarn install;
 	if yarn build; then
 			echo "Successfully build"
 	else
@@ -56,7 +57,7 @@ TEST(){
 }
 
 DEPLOY(){
-	mv dist/ $APP_DIR
+	mv * $APP_DIR	
 	pm2 start $APP_DIR/index.js --name $APP_NAME
 	pm2 save
 }
