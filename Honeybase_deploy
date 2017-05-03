@@ -7,39 +7,54 @@
 APP_NAME="HoneyBase"
 
 # Path to the app clone.
-APP_DIR="$HOME/clones/$APP_NAME"
+APP_DIR="$HOME/node_apps/$APP_NAME"
+
+function error_exit
+{
+	echo "$1" 1>&2
+	exit 1
+}
 
 hash pm2 2>/dev/null ||
 {
-	echo >&2 "Error: PM2 is required but it's not installed.  Aborting.";
-#	exit 1;
+#	error_exit "Error: PM2 is required but it's not installed.  Aborting.";
 }
 hash yarn 2>/dev/null ||
 {
-	echo >&2 "Error: Yarn is required but it's not installed.  Aborting.";
-	exit 1;
+	error_exit "Error: Yarn is required but it's not installed.  Aborting.";
 }
 # Check if the app dir exist
 if [ ! -d $APP_DIR ]; then
-	echo "Error: $APP_DIR does not exist!"
-	#exit 1;
+	error_exit "Error: $APP_DIR does not exist!"
 fi
-
+STOP_CURRENT_PROCESS(){
+	pm2 stop $APP_NAME
+}
 # Build the node app
 BUILD(){
-	rm -rf dist;
-	yarn build;
+	if yarn build; then
+			echo "Successfully build"
+	else
+				error_exit "Build error! Aborting"
+	fi	
 }
 
 
 # Run test's
 TEST(){
-	yarn test;
+	if yarn test; then 
+		echo "Test passed"					
+	else
+					error_exit "Testing failed. Not deploying"
+	fi
 }
 
 DEPLOY(){
-				echo $(pwd);
-				ls;
+	mv dist/ $APP_DIR
+	pm2 start $APP_DIR/index.js --name $APP_NAME
+	pm2 save
 }
-
+STOP_CURRENT_PROCESS
+TEST
+BUILD
 DEPLOY
