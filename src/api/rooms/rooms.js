@@ -10,8 +10,9 @@ export default ({ config }) => resource({
 	 *  Errors terminate the request, success sets `req[id] = data`.
 	 */
 	load(req, id, callback) {
-		roomsModel.read({ room_id: id }, (err, result) => {
+		roomsModel.read({ 'id': id }, (err, result) => {
 			// Check if the result from the database has any rows.
+			if(err) callback(err, null);
 			err = result.rowCount !== 0 ? null :  {'status': 'error', 'message': 'Room with ID ' + id + ' doesnt exist!'};
 			callback(err, result.rows[0]);
 		});
@@ -21,7 +22,7 @@ export default ({ config }) => resource({
 	index({ params }, res) {
 		roomsModel.list((err, data) => {
 			if(err) return res.status(404).jsend.error(err);
-			res.jsend.success(data);
+			res.jsend.success(data.rows);
 		});
 	},
 
@@ -29,8 +30,8 @@ export default ({ config }) => resource({
 	create({ body }, res) {
 		// The room details is in body
 		roomsModel.create(body, (err, data) => {
-			if(err) return res.jsend.status(404).error(err);
-			res.jsend.success(data);
+			if(err) return res.status(404).jsend.error(err);
+			res.jsend.success(data.rows);
 		});
 	},
 
@@ -41,7 +42,7 @@ export default ({ config }) => resource({
 
 	/** PUT /:id - Update a given entity */
 	update({ roomId, params, body }, res) {
-		roomsModel.update({ "room_id": roomId.room_id }, (err, data) => {
+		roomsModel.update({ "id": roomId.id }, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
 			res.status(204).jsend.success(data);
 		});
@@ -49,7 +50,7 @@ export default ({ config }) => resource({
 
 	/** DELETE /:id - Delete a given entity */
 	delete({ roomId, body }, res) {
-		roomsModel.delete({ "room_id": roomId.room_id }, (err, data) => {
+		roomsModel.delete({ "id": roomId.id }, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
 			res.status(204).jsend.success(data);
 		});

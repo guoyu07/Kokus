@@ -8,20 +8,15 @@ export default ({ config, db }) => resource({
 	},
 	/** POST / - Create a new entity */
 	create({ body }, res) {
-        if(body.key){
-            authorizer.authorizeApi(body.key, (err, token) => {
-                if(token){
-                    res.jsend.success({
-                    expires:  config.jwt.expire,
-                    token: token
-                    });
-                } else {
-                    res.jsend.error(err);
-                }
+        if(!body.key) return res.jsend.error("No API key in body");
+        authorizer.authorizeApi(body.key, (err, token) => {
+            if(!token) return res.jsend.error(err);
+            res.jsend.success({
+            // TODO: Fix this.. it will not send with config.jwt.expire, suspect its because of config change
+            // expires:  config.jwt.expire,
+            token: token
             });
-        } else {
-           res.jsend.error("No API key in body");
-        }
+        });
 	},
 	/** PUT /:id - Update a given entity */
 	update({ body }, res) {

@@ -16,7 +16,14 @@ const sqlConstructor = {
      */
     insert: (table, data) => {
         let sql = builder.into(table);
+        sql.returning('id');
         if(data){
+            // Check if its a json object for the database
+            for(let key in data){
+                if(typeof data[key] === 'object'){
+                    data[key] = JSON.stringify(data[key]);
+                }
+            }
             sql.insert(data);
         }
         return sql.toString();  
@@ -36,7 +43,15 @@ const sqlConstructor = {
      */
     update: (table, data, params) => {
         let sql = builder.into(table);
+        sql.returning('id');        
         if(data){
+            // Check if its a json object for the database
+            for(let key in data){
+                if(typeof data[key] === 'object'){
+                    // Then stringify it.
+                    data[key] = JSON.stringify(data[key]);
+                }
+            }
             sql.update(data);
         }
         if(params){
