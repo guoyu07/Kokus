@@ -13,6 +13,7 @@ export default ({ config, db }) => resource({
 		// Get the room id from urls TODO: research a better way!
 		let roomId = req.baseUrl.split("/")[3];
 		roomEventsModel.read({ 'id': eventId, 'room_id': roomId }, (err, result) => {
+			if(err) callback(err, null);
 			err = result.rowCount !== 0 ? null : {'status': 'error', 'message': 'Event with ID ' + eventId + ' doesnt exist!'};
 			callback(err, result.rows[0]);
 		});
