@@ -87,6 +87,10 @@ const sqlConstructor = {
                 sql = helpers.between(sql, data.between);
                 delete data.between;
             }
+            if(data.after){
+                sql = helpers.after(sql, data.after);
+                delete data.after;
+            }
             sql.where(data);
         }
         return sql.toString();
@@ -130,6 +134,10 @@ const helpers = {
             sql.where(filter.first, filter.operator, filter.last);
         }
         return sql;
+    },
+    after: (sql, after) => {
+        sql.where(after.attribute, '>=', after.date);  
+        return sql;      
     }
 }
 export default sqlConstructor;

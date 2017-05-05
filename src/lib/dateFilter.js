@@ -9,25 +9,37 @@ const dateFilter = (filter, attribute) => {
         case 'week':
             return getWeek(attribute);
         case 'month':
-            return getMonth(attribute);
+            return getMonth(attribute); 
+        case 'future':
+            return getFuture(attribute);
         default:
             return getWeek(attribute);
     }
 }
 const getMonth = (attribute) => {
-    let dateFilter = {
-        'attribute': attribute
+    let dateFilter = {};
+    dateFilter.between = {
+        attribute,
+        'first': moment().month(info.currentMonth).date(1).hour(0).minutes(1).second(0).format(),
+        'last': moment().month(info.currentMonth).date(info.daysInCurrentMonth).hour(0).minutes(1).second(0).format()
     };
-    dateFilter.first  = moment().month(info.currentMonth).date(1).hour(0).minutes(1).second(0).format();
-    dateFilter.last   = moment().month(info.currentMonth).date(info.daysInCurrentMonth).hour(0).minutes(1).second(0).format();
     return dateFilter;
 }
 const getWeek = (attribute) => {
-    let dateFilter = {
-        'attribute': attribute
+    let dateFilter = {};
+    dateFilter.between = {
+        attribute,
+        'first': moment().weekday(1).hour(0).minutes(1).second(0).format(),
+        'last': moment().weekday(7).hour(0).minutes(1).second(0).format()
+    }
+    return dateFilter;
+}
+const getFuture = (attribute) => {
+    let dateFilter = {};
+    dateFilter.after = {
+        attribute,
+        'date': moment().hour(0).minutes(0).seconds(0).format()
     };
-    dateFilter.first  = moment().weekday(1).hour(0).minutes(1).second(0).format();
-    dateFilter.last   = moment().weekday(7).hour(0).minutes(1).second(0).format();
     return dateFilter;
 }
 export default dateFilter;
