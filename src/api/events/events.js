@@ -10,10 +10,9 @@ export default () => resource({
 	 *  Errors terminate the request, success sets `req[id] = data`.
 	 */
 	load(req, eventId, callback) {
-		let data = {
-			'id': eventId
-		};
+		let data = { 'id': eventId };
 		if(req.params.roomId){
+			// Get roomid from parent router parameters
 			data.room_id = req.params.room_id;
 		}
 		eventsModel.read(data, (err, result) => {
