@@ -4,7 +4,7 @@ import keys from './keys';
 import database from './database';
 import server from './server';
 
-export default ({ config, db }) => {
+export default ({ config }) => {
 	let settingsRouter = Router();
 
 	settingsRouter.use('/keys', keys({ config }));

@@ -3,21 +3,17 @@ import sqlConstructor from '../../lib/statementConstructor';
 import dateFilter from '../../lib/dateFilter';
 
 
-const roomEventsModel = {
-    list: (data, callback) =>{
-        if(data.filter == 'false' || data.filter == false){
-            delete data.filter;
-        } else {
-            let week = {
-                between: {
-                    attribute: 'start_time', 
-                    first: dateFilter.getWeek().first,
-                    last: dateFilter.getWeek().last
-                }
+const eventsModel = {
+    list: (data, params, callback) =>{
+        if(params.filter != 'false'){
+            if(!params.filter){
+                params.filter = 'week';
             }
-            data = Object.assign(data, week);
+            data.between = dateFilter(params.filter, 'start_time');
         }
-
+        if(params.userid){
+            data.user_id = params.userid;
+        }
         let statement = sqlConstructor.select('events', data);
         database.query(statement, (err, event) => {
             callback(err, event);
@@ -48,4 +44,4 @@ const roomEventsModel = {
         });
     }
 };
-export default roomEventsModel;
+export default eventsModel;

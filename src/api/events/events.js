@@ -1,8 +1,8 @@
 import resource from 'resource-router-middleware';
-import roomEventsModel from '../../models/rooms/roomEvents';
+import eventsModel from '../../models/events/events';
 
-export default ({ config, db }) => resource({
-
+export default () => resource({
+	mergeParams: true,
 	/** Property name to store preloaded entity on `request`. */
 	id : 'eventId',
 
@@ -10,9 +10,13 @@ export default ({ config, db }) => resource({
 	 *  Errors terminate the request, success sets `req[id] = data`.
 	 */
 	load(req, eventId, callback) {
-		// Get the room id from urls TODO: research a better way!
-		let roomId = req.baseUrl.split("/")[3];
-		roomEventsModel.read({ 'id': eventId, 'room_id': roomId }, (err, result) => {
+		let data = {
+			'id': eventId
+		};
+		if(req.params.roomId){
+			data.room_id = req.params.room_id;
+		}
+		eventsModel.read(data, (err, result) => {
 			if(err) callback(err, null);
 			err = result.rowCount !== 0 ? null : {'status': 'error', 'message': 'Event with ID ' + eventId + ' doesnt exist!'};
 			callback(err, result.rows[0]);
@@ -20,19 +24,20 @@ export default ({ config, db }) => resource({
 	},
 
 	/** GET / - List all entities */
-	index({ baseUrl, query }, res) {
-		let roomId = baseUrl.split("/")[3];
-		let data = Object.assign({'room_id': roomId}, query);
-		roomEventsModel.list(data, (err, data) => {
+	index({ query, params }, res) {
+		let data = {};
+		if(params.roomId){
+			data.room_id = params.roomId;
+		}
+		eventsModel.list(data, query, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
 			res.jsend.success(data.rows);
 		});
 	},
 
 	/** POST / - Create a new entity */
-	create({ body, baseUrl }, res) {
-		body.room_id = baseUrl.split("/")[3]; 		
-		roomEventsModel.create(body, (err, data) => {
+	create({ body }, res) {
+		eventsModel.create(body, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
 			res.jsend.success(data);
 		});
@@ -45,7 +50,7 @@ export default ({ config, db }) => resource({
 
 	/** PUT /:id - Update a given entity */
 	update({ body, params }, res) {
-		roomEventsModel.update({ 'id': params.eventId } , body, (err, data) => {
+		eventsModel.update({ 'id': params.eventId } , body, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
 			res.jsend.success(data);
 		});
@@ -53,7 +58,7 @@ export default ({ config, db }) => resource({
 
 	/** DELETE /:id - Delete a given entity */
 	delete({ params }, res) {
-		roomEventsModel.delete({'id': params.eventId }, (err, data) => {
+		eventsModel.delete({'id': params.eventId }, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
 			res.jsend.success(data);
 		});
