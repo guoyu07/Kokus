@@ -1,8 +1,7 @@
 import resource from 'resource-router-middleware';
 import roomsModel from '../../models/rooms/rooms';
 
-export default ({ config }) => resource({
-
+export default () => resource({
 	/** Property name to store preloaded entity on `request`. */
 	id : 'roomId',
 

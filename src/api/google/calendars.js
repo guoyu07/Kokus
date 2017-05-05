@@ -1,7 +1,7 @@
 import resource from 'resource-router-middleware';
 import googleCalendars from '../../models/google/calendars';
 
-export default ({ config, db }) => resource({
+export default ({ config }) => resource({
 
 	/** Property name to store preloaded entity on `request`. */
 	id : 'facet',
