@@ -91,6 +91,10 @@ const sqlConstructor = {
                 sql = helpers.after(sql, data.after);
                 delete data.after;
             }
+            if(data.orderBy){
+                sql = helpers.orderBy(sql, data.orderBy);
+                delete data.orderBy;
+            }
             sql.where(data);
         }
         return sql.toString();
@@ -118,6 +122,7 @@ const helpers = {
     between: (sql, between) => {
         if(Array.isArray(between)) {
             between.forEach((element) => {
+                // Which attribute is the being checked
                 sql.whereBetween(element.attribute, [element.first, element.last]);     
             });
         } else {
@@ -128,6 +133,8 @@ const helpers = {
     filter: (sql, filter) => {
         if(Array.isArray(filter)) {
             filter.forEach((element) => {
+                // Where the first is something than the last
+                // eg first < last 
                 sql.where(element.first, element.operator, element.last);     
             });
         } else {
@@ -137,6 +144,14 @@ const helpers = {
     },
     after: (sql, after) => {
         sql.where(after.attribute, '>=', after.date);  
+        return sql;      
+    },
+    orderBy: (sql, orderBy) => {
+        sql.orderBy(
+            orderBy.attribute ? orderBy.attribute : orderBy,
+            // The default order way is ascending.
+            orderBy.type ? orderBy.type : 'ASEC'
+            );  
         return sql;      
     }
 }
