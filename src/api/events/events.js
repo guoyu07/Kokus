@@ -38,7 +38,7 @@ export default () => resource({
 	create({ body }, res) {
 		eventsModel.create(body, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
-			res.jsend.success(data);
+			res.jsend.success(data.rows);
 		});
 	},
 
@@ -51,7 +51,7 @@ export default () => resource({
 	update({ body, params }, res) {
 		eventsModel.update({ 'id': params.eventId } , body, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
-			res.jsend.success(data);
+			res.jsend.success(data.rows);
 		});
 	},
 
