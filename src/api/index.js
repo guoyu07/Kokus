@@ -12,7 +12,7 @@ export default ({ config }) => {
 	let api = Router();
 	// Make sure authenticate is not a protected route
 	// eg it has to be above the middleware
-	api.use('/authenticate', authenticate({ config }));
+	api.use('/auth', authenticate({ config }));
 	// check api key
 	api.use(apikeyMiddleware);
 	
