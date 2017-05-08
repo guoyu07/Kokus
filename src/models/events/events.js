@@ -16,7 +16,19 @@ const eventsModel = {
         if(params.userid){
             // Search by user id
             data.user_id = params.userid;
-        } 
+        }
+        if(params.orderBy){
+            // This is if the "user" wants it to be ordered by something else than the defualt value
+            if(params.orderType){
+                Object.assign(data, { orderBy: { attribute: params.orderBy, type: params.orderType } })
+            } else {
+                data.orderBy = params.orderBy;
+            }
+        } else {
+            // Defualt order is by start_time
+            data.orderBy = 'start_time'
+        }
+
         let statement = sqlConstructor.select('events', data);
         database.query(statement, (err, event) => {
             callback(err, event);
