@@ -1,7 +1,7 @@
 import { version, name, description } from '../../package.json';
 import { Router } from 'express';
 import calendars from './google/calendars';
-import authenticate from './authenticate';
+import auth from './auth';
 import events from './events';
 import rooms from './rooms';
 import settings from './settings';
@@ -12,7 +12,9 @@ export default ({ config }) => {
 	let api = Router();
 	// Make sure authenticate is not a protected route
 	// eg it has to be above the middleware
-	api.use('/auth', authenticate({ config }));
+
+	api.use('/auth', auth({ config }));
+
 	// check api key
 	api.use(apikeyMiddleware);
 	
