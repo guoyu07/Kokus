@@ -1,5 +1,5 @@
 import resource from 'resource-router-middleware';
-import authorizer from '../auth';
+import authorizer from '../../auth';
 
 export default ({ config, db }) => resource({
 	/** GET / - List all entities */
