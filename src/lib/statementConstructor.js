@@ -4,6 +4,11 @@ import knex from 'knex';
 let builder = new knex({ client: config.databaseSettings.databaseType });
 
 const sqlConstructor = {
+    illegalCheck: (table, data) => {
+        // Very specific usecase.. It will check if its legal to create a event in a given timeframe, eg looks for overlapping events
+        return builder('events').where('room_id', data.room_id).where('start_time', '>=', data.start_time).where('start_time', '<', data.end_time)
+        .orWhere('end_time', '>', data.start_time).where('end_time', '<=', data.end_time).toString();
+    },
     /**
      * Table can be an array of tables ['foo', 'bar', ...];
      * Data is an Object eg {'foo': 'foo', 'bar': 'bar', ... };
@@ -86,6 +91,10 @@ const sqlConstructor = {
             if(data.between){
                 sql = helpers.between(sql, data.between);
                 delete data.between;
+            }        
+            if(data.orBetween){                
+                sql = helpers.orBetween(sql, data.orBetween);
+                delete data.orBetween;
             }
             if(data.after){
                 sql = helpers.after(sql, data.after);
@@ -127,6 +136,16 @@ const helpers = {
             });
         } else {
             sql.whereBetween(between.attribute, [between.first, between.last]);
+        }
+        return sql;
+    },
+    orBetween: (sql, orBetween) => {
+        if(Array.isArray(orBetween)) {
+            orBetween.forEach((element) => {
+                sql.orWhereBetween(element.attribute, [element.first, element.last]); 
+            });
+        } else {
+            throw {name : "BetweenNotArray", message : "orBetween expects an array."}; 
         }
         return sql;
     },

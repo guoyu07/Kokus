@@ -35,9 +35,13 @@ const eventsModel = {
          });
     },
     create: (event, callback) => {
-        let statement = sqlConstructor.insert('events', event);
-        database.query(statement, (err, event) => {
-            callback(err, event);
+        // Check if it's legal to create the event           
+        eventsModel.illegalTimeFrameChecker(event, (err) => {
+            if(err) return callback(err, null);
+            let statement = sqlConstructor.insert('events', event);
+            database.query(statement, (err, event) => {
+                callback(err, event);
+            });
         });
     },
     read:   (event, callback) => {
@@ -57,6 +61,13 @@ const eventsModel = {
         database.query(statement, (err, event) => {
             callback(err, event);
         });
+    },
+    illegalTimeFrameChecker: (event, callback) => {
+        let newState = sqlConstructor.illegalCheck('events', event);
+            database.query(newState, (err, events) => {
+                if(events.rowCount > 0) return callback('Illegal time frame, overlapping events');
+                callback(null, events);
+            })
     }
 };
 export default eventsModel;
