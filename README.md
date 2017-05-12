@@ -1,6 +1,6 @@
 [![Build Status](https://semaphoreci.com/api/v1/thesinding/honeybase/branches/admin-panel/shields_badge.svg)](https://semaphoreci.com/thesinding/honeybase)
 
-HoneyBase - Booking backend
+Kokus - Booking API
 ==================================
 
 - A Booking backend supporting Google Calendar
