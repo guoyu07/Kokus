@@ -1,5 +1,5 @@
 import resource from 'resource-router-middleware';
-import { serverSettingsModel } from '../../models/settings';
+import { serverSettingsModel } from '../../../models/v1/settings';
 
 export default ({ config }) => resource({
 
