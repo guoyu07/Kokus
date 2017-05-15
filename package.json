@@ -1,7 +1,7 @@
 {
-  "name": "HoneyBase",
+  "name": "Kokus",
   "version": "0.0.2",
-  "description": "Backend for HoneyBooq",
+  "description": "Booking Backend",
   "main": "dist",
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
@@ -24,7 +24,7 @@
       "no-unused-vars": 1
     }
   },
-  "repository": "coworkingplus/HoneyBase",
+  "repository": "coworkingplus/Kokus",
   "author": "Simon Sinding <sinding2000@gmail.com>",
   "license": "GNU GPLv3",
   "dependencies": {
@@ -42,6 +42,7 @@
     "morgan": "^1.8.0",
     "path-parser": "^2.0.2",
     "pg": "^6.1.5",
+    "pg-native": "^1.10.1",
     "resource-router-middleware": "^0.6.0"
   },
   "devDependencies": {

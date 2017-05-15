@@ -1,6 +1,6 @@
-import database from '../../database';
-import sqlConstructor from '../../lib/statementConstructor';
-import dateFilter from '../../lib/dateFilter';
+import database from '../../../database';
+import sqlConstructor from '../../../lib/statementConstructor';
+import dateFilter from '../../../lib/dateFilter';
 
 
 const eventsModel = {

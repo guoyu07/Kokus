@@ -1,6 +1,5 @@
 import resource from 'resource-router-middleware';
-import eventsModel from '../../models/events/events';
-
+import eventsModel from '../../../models/v1/events/events';
 export default () => resource({
 	mergeParams: true,
 	/** Property name to store preloaded entity on `request`. */

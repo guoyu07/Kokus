@@ -1,39 +1,38 @@
-import database from '../../database';
-import sqlConstructor from '../../lib/statementConstructor';
+import database from '../../../database';
+import sqlConstructor from '../../../lib/statementConstructor';
 
 
-const apikeyModel = {
-    list: (callback) => {
-        let statement = sqlConstructor.select("apikeys");
+const roomsModel = {
+    list: (callback) =>{
+        let statement = sqlConstructor.select("rooms");
         database.query(statement, (err, data) => {
             callback(err, data);
          });
     },
     create: (room, callback) => {
-        let statement = sqlConstructor.insert("apikeys", room);
-        
+        let statement = sqlConstructor.insert("rooms", room);
         database.query(statement, (err, data) => {
             callback(err, data);
         });
     },
     read:   (room, callback) => {
-        let statement = sqlConstructor.select("apikeys", room);
+        let statement = sqlConstructor.select("rooms", room);
         database.query(statement, (err, data) => {
             callback(err, data);
         });
     },
     update: (roomId, room, callback) => {
-        let statement = sqlConstructor.update("apikeys", roomId, room);
+        let statement = sqlConstructor.update("rooms", roomId, room);
         database.query(statement, (err, data) => {
             callback(err, data);
         });
     },
     delete: (room, callback) => {
-        let statement = sqlConstructor.delete("apikeys", room);
+        let statement = sqlConstructor.delete("rooms", room);
         database.query(statement, (err, data) => {
             callback(err, data);
         });
     },
 };
 
-export default apikeyModel;
+export default roomsModel;

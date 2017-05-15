@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { version, name, description } from '../../../package.json';
+import { version, name, description } from '../../../../package.json';
 import keys from './keys';
 import database from './database';
 import server from './server';

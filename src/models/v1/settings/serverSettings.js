@@ -1,4 +1,4 @@
-import { serverConfig, paths } from '../../configs';
+import { serverConfig, paths } from '../../../configs';
 import fs from 'fs';
 import path from 'path';
 

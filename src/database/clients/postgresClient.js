@@ -1,7 +1,6 @@
 import credentials from '../../credentials/databaseCrendentials';
 import { databaseSettings } from '../../config';
 import pg from 'pg';
-
 const { postgres } = credentials.databaseCredentials;
 const { user, password } = postgres;
 const { host, port, database } = databaseSettings;
@@ -18,18 +17,18 @@ const pool = new pg.Pool(poolConfig);
 pool.on('error', (err, client) => {
     console.error('Idle client error', err.message, err.stack);
 });
-// const postgresClient = {
-//     query: (callback) => {
-//         callback(err, pool);
-//     }
-// };
 
 export const pgQuery = (sql, callback) => { 
-    // console.log(text, values);
-    return pool.query(sql, callback); 
+    pool.connect((err, client, done)=> {
+        if(err) return callback(err, null);
+        client.query(sql, (err, result) => {
+            done();
+            callback(err, result);
+        });
+    });
 };
 
 export const pgConnection = (callback) => {
-    return pool.connection(callback);
+    return pool.connect(callback);
 };
 

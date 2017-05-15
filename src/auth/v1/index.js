@@ -1,29 +1,11 @@
 import jwt from 'jsonwebtoken';
-import database from '../database';
-import secret from '../credentials/jwtsecret';
-import sqlConstructor from '../lib/statementConstructor';
-import googleJwtClient from './google/googleJwtClient';
-import googleUserClient from './google/googleUserClient';
+import database from '../../database';
+import secret from '../../credentials/jwtsecret';
+import sqlConstructor from '../../lib/statementConstructor';
 
-import config from '../config';
+import config from '../../config';
 
 const authorizer = {
-    google: {
-        authorize(callback){
-            switch(config.authorizeMethod.google){
-                case 'jwt': 
-                    googleJwtClient.authorize((err, authorizedClient) => {
-                        callback(err, authorizedClient);
-                    });
-                    break;
-                case 'client':
-                    googleUserClient.authorize((err, authorizedClient) => {
-                        callback(err, authorizedClient);
-                    });
-                    break;            
-            }
-        }
-    },
     authorizeApi: (key, callback) => {
         let statement = sqlConstructor.select('apikeys', { 'key': key });
         database.query(statement, (err, res) => {

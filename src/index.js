@@ -28,7 +28,7 @@ initializeDb( db => {
 
 	// internal middleware
 	app.use(middleware({ serverConfig, db }));
-
+	
 	// api router
 	app.use('/api', api({ serverConfig, db }));
 
