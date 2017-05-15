@@ -1,4 +1,4 @@
-[![Build Status](https://semaphoreci.com/api/v1/thesinding/honeybase/branches/admin-panel/shields_badge.svg)](https://semaphoreci.com/thesinding/honeybase)
+[![Build Status](https://semaphoreci.com/api/v1/thesinding/honeybase/branches/master/shields_badge.svg)](https://semaphoreci.com/thesinding/honeybase)
 
 Kokus - Booking API
 ==================================
