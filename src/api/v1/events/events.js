@@ -55,7 +55,8 @@ export default () => resource({
 	},
 
 	/** DELETE /:id - Delete a given entity */
-	delete({ params }, res) {
+	delete({ eventId, body, params }, res) {
+		if(eventId.user_id != body.user_id) return res.status(404).jsend.error("User ID: " + body.user_id + " did not create event ID: " + eventId.id);
 		eventsModel.delete({'id': params.eventId }, (err, data) => {
 			if(err) return res.status(404).jsend.error(err);
 			res.jsend.success(data);
