@@ -38,7 +38,7 @@ const getFuture = (attribute) => {
     let dateFilter = {};
     dateFilter.after = {
         attribute,
-        'date': moment().hour(0).minutes(0).seconds(0).format()
+        'date': moment().format()
     };
     return dateFilter;
 }

@@ -11,7 +11,7 @@ const eventsModel = {
                 params.filter = 'week';
             }
             // Merge the two objects
-            Object.assign(data, dateFilter(params.filter, 'start_time')); 
+            Object.assign(data, dateFilter(params.filter, 'end_time')); 
         }
         if(params.userid){
             // Search by user id
