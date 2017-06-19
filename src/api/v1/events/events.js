@@ -14,7 +14,6 @@ export default () => resource({
 			// Get roomid from parent router parameters
 			data.room_id = req.params.roomId;
 		}
-		console.log(data);
 		eventsModel.read(data, (err, result) => {
 			if(err) callback(err, null);
 			err = result.rowCount !== 0 ? null : {'status': 'error', 'message': 'Event with ID ' + eventId + ' doesnt exist!'};
