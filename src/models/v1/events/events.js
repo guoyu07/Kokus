@@ -65,7 +65,8 @@ const eventsModel = {
     illegalTimeFrameChecker: (event, callback) => {
         let newState = sqlConstructor.illegalCheck('events', event);
             database.query(newState, (err, events) => {
-                if(events.rowCount > 0) return callback('Illegal time frame, overlapping events');
+                // if(err) return callback(err, events);
+                if(!events) return callback('Illegal time frame, overlapping events');
                 callback(null, events);
             })
     }
